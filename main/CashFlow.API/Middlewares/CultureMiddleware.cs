@@ -3,10 +3,10 @@ using System.Globalization;
 
 namespace CashFlow.Api.Middlewares;
 
-public class CultureMiddlewarecs
+public class CultureMiddleware
 {
     private readonly RequestDelegate _next;
-    public CultureMiddlewarecs(RequestDelegate next)
+    public CultureMiddleware(RequestDelegate next)
     {
         _next = next;
     }
