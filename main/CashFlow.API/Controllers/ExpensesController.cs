@@ -8,9 +8,10 @@ public class ExpensesController : CashFlowBaseController
 {
     [HttpPost]
 
-    public IActionResult Register(RequestExpenseJson request)
+    public IActionResult Register(
+        [FromServices] IRegisterExpenseUseCase useCase,
+        RequestExpenseJson request)
     {
-        var useCase = new RegisterExpenseUseCase();
 
         var response = useCase.Execute(request);
 
