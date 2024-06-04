@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Localization;
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace CashFlow.Api.Middlewares;
 
