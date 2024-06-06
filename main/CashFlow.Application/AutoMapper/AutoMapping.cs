@@ -23,6 +23,8 @@ namespace CashFlow.Application.AutoMapper
         {
             CreateMap<Expense, ResponseRegisteredExpenseJson>();
             CreateMap<Expense, ResponseShortExpenseJson>();
+            CreateMap<Expense, ResponseLongExpenseJson>()
+                .ForMember(dest => dest.Type, source => source.MapFrom(src => src.PaymentType));
                
         }
 

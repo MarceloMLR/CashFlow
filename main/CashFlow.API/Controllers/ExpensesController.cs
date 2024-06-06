@@ -1,4 +1,5 @@
 ﻿using CashFlow.Application.UseCases.Expenses.GetAll;
+using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
@@ -36,5 +37,15 @@ public class ExpensesController : CashFlowBaseController
         }
         
         return NoContent();
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+
+    public async Task<IActionResult> GetExpenseById([FromServices] IGetByIdExpensesUseCase useCase, [FromRoute] long id)
+    {
+        var response = await useCase.Execute(id);
+
+        return Ok(response);
     }
 }
