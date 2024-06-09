@@ -2,9 +2,11 @@
 using CashFlow.Application.UseCases.Expenses.GetAll;
 using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
+using CashFlow.Application.UseCases.Expenses.Update;
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata.Ecma335;
 
 namespace CashFlow.Api.Controllers;
 
@@ -36,7 +38,7 @@ public class ExpensesController : CashFlowBaseController
         {
             return Ok(response);
         }
-        
+
         return NoContent();
     }
 
@@ -63,4 +65,18 @@ public class ExpensesController : CashFlowBaseController
 
         return NoContent();
     }
+
+    [HttpPut]
+    [ProducesResponseType(typeof(ResponseLongExpenseJson), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
+    [Route("{id}")]
+    public async Task<IActionResult> Update(
+       [FromServices] IUpdateExpenseUseCase useCase,
+       [FromRoute] long id,
+       [FromBody] RequestExpenseJson request) 
+        {
+        await useCase.Execute(id, request);
+        return NoContent();
+        }
 }
