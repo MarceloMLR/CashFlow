@@ -1,13 +1,27 @@
 ﻿
 using CashFlow.Domain.Reports;
+using CashFlow.Domain.Repositories.Expenses;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace CashFlow.Application.UseCases.Reports.Excel
 {
     public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
     {
+        private readonly IExpensesReadOnlyRepository _repository;
+        public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository)
+        {
+            _repository = repository;
+        }
         public async Task<byte[]> Execute(DateTime month)
         {
+            var expenses = await _repository.FilterByMonth(month);
+
+            if (expenses.Count > 0)
+            {
+                return [];
+            }
+
             var workbook = new XLWorkbook();
 
             workbook.Author = "Marcelo Lima";
@@ -15,8 +29,11 @@ namespace CashFlow.Application.UseCases.Reports.Excel
             workbook.Style.Font.FontName = "Times New Roman";
 
             var worksheet = workbook.Worksheets.Add(month.ToString("Y"));
+            
 
             InsertHeader(worksheet);
+
+         
 
             var file = new MemoryStream();
 
@@ -34,13 +51,20 @@ namespace CashFlow.Application.UseCases.Reports.Excel
             worksheet.Cell("E1").Value = ResourceReportGenerationMessages.DESCRIPTION;
 
             worksheet.Cells("A1:E1").Style.Font.Bold = true;
+            worksheet.Cells("A1:E1").Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
             worksheet.Cells("A1:E1").Style.Fill.BackgroundColor = XLColor.FromHtml("#33B8FF");
+            
 
             worksheet.Cell("A1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             worksheet.Cell("B1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             worksheet.Cell("C1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
             worksheet.Cell("D1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Right);
             worksheet.Cell("E1").Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+
+            
+
+            
         }
     }
 }
