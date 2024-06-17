@@ -1,14 +1,11 @@
 ﻿using CashFlow.Application.UseCases.Reports.Pdf.Fonts;
-using CashFlow.Domain.Entities;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
-using DocumentFormat.OpenXml.Spreadsheet;
-using DocumentFormat.OpenXml.Wordprocessing;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 using PdfSharp.Fonts;
 using System.Reflection;
-using Document = MigraDoc.DocumentObjectModel.Document;
+using MigraDoc.DocumentObjectModel.Tables;
 using Font = MigraDoc.DocumentObjectModel.Font;
 
 namespace CashFlow.Application.UseCases.Reports.Pdf;
@@ -42,7 +39,10 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         CreateHeaderWithLogoAndName(page);
         CreateTotalSpentSection(page, month, totalExpenses);
 
-
+        foreach (var expense in expenses)
+        {
+            CreateExpenseTable(page);
+        }
 
 
         return RenderDocument(document);
@@ -95,6 +95,19 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         row.Cells[1].AddParagraph("Olá, Marcelo Lima");
         row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+    }
+
+    private Table CreateExpenseTable(Section page)
+    {
+        var table = page.AddTable();
+        table.AddColumn("195").Format.Alignment = ParagraphAlignment.Left;
+        table.AddColumn("80").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Center;
+        table.AddColumn("120").Format.Alignment = ParagraphAlignment.Right;
+
+
+
+        return table;
     }
 
     private void CreateTotalSpentSection(Section page, DateTime month, decimal totalExpenses)
