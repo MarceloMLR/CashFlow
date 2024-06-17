@@ -8,6 +8,12 @@ using System.Reflection;
 using MigraDoc.DocumentObjectModel.Tables;
 using Font = MigraDoc.DocumentObjectModel.Font;
 using CashFlow.Application.UseCases.Reports.Pdf.Colors;
+using CashFlow.Domain.Extensions;
+
+
+
+
+
 
 namespace CashFlow.Application.UseCases.Reports.Pdf;
 
@@ -15,6 +21,8 @@ namespace CashFlow.Application.UseCases.Reports.Pdf;
 public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCase
 {
     private const string CURRENCY_SYMBOL = "R$";
+    private const int HEIGHT_ROW_EXPENSE_TABLE = 25;
+
     private readonly IExpensesReadOnlyRepository _repository;
 
     public GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository)
@@ -45,23 +53,34 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
             var table = CreateExpenseTable(page);
 
             var row = table.AddRow();
-            row.Height = 25;
+            row.Height = HEIGHT_ROW_EXPENSE_TABLE;
 
-            row.Cells[0].AddParagraph(expense.Title);
-            row.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.BLACK };
-            row.Cells[0].Shading.Color = ColorsHelper.RED_LIGHT;
-            row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-            row.Cells[0].MergeRight = 2;
-            row.Cells[0].Format.LeftIndent = 20;
+            CreateExpenseTitle(row.Cells[0], expense.Title);
 
-            row.Cells[3].AddParagraph(ResourceReportGenerationMessages.AMOUNT);
-            row.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.WHITE };
-            row.Cells[3].Shading.Color = ColorsHelper.RED_DARK;
-            row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+            CreateExpenseAmount(row.Cells[3]);
 
             row = table.AddRow();
-            row.Height = 30;
-            row.Borders.Visible = false;
+            row.Height = HEIGHT_ROW_EXPENSE_TABLE;
+
+
+            row.Cells[0].AddParagraph(expense.Date.ToString("D"));
+            SetStyleBaseForExpenseInformation(row.Cells[0]);
+            row.Cells[0].Format.LeftIndent = 20;
+
+            row.Cells[1].AddParagraph(expense.Date.ToString("t"));
+            SetStyleBaseForExpenseInformation(row.Cells[1]);
+
+            row.Cells[2].AddParagraph(expense.PaymentType.PaymentTypeToString());
+            SetStyleBaseForExpenseInformation(row.Cells[2]);
+
+
+            AddAmountForExpenses(row.Cells[3], expense.Amount);
+
+            AddWhiteSpace(table);
+
+
+
+
         }
 
 
@@ -144,6 +163,46 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
        
 
         paragraph.AddFormattedText($"{totalExpenses} {CURRENCY_SYMBOL}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+    }
+
+    private void CreateExpenseTitle(Cell cell, string expenseTitle)
+    {
+        cell.AddParagraph(expenseTitle);
+        cell.Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.BLACK };
+        cell.Shading.Color = ColorsHelper.RED_LIGHT;
+        cell.VerticalAlignment = VerticalAlignment.Center;
+        cell.MergeRight = 2;
+        cell.Format.LeftIndent = 20;
+    }
+
+    private void CreateExpenseAmount(Cell cell)
+    {
+        cell.AddParagraph(ResourceReportGenerationMessages.AMOUNT);
+        cell.Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.WHITE };
+        cell.Shading.Color = ColorsHelper.RED_DARK;
+        cell.VerticalAlignment = VerticalAlignment.Center;
+    }
+
+    private void SetStyleBaseForExpenseInformation(Cell cell)
+    {
+        cell.Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 12, Color = ColorsHelper.BLACK };
+        cell.Shading.Color = ColorsHelper.GREEN_DARK;
+        cell.VerticalAlignment = VerticalAlignment.Center;
+    }
+
+    private void AddAmountForExpenses(Cell cell, decimal amount)
+    {
+        cell.AddParagraph($"-{amount} {CURRENCY_SYMBOL}");
+        cell.Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorsHelper.BLACK };
+        cell.Shading.Color = ColorsHelper.WHITE;
+        cell.VerticalAlignment = VerticalAlignment.Center;
+    }
+
+    private void AddWhiteSpace(Table table)
+    {
+        var row = table.AddRow();
+        row.Height = 30;
+        row.Borders.Visible = false;
     }
 
     private byte[] RenderDocument(Document document)
