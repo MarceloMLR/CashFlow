@@ -3,7 +3,6 @@ using CashFlow.Domain.Enums;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.VariantTypes;
 
 namespace CashFlow.Application.UseCases.Reports.Excel
 {

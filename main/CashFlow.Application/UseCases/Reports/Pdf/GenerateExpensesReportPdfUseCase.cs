@@ -7,6 +7,7 @@ using PdfSharp.Fonts;
 using System.Reflection;
 using MigraDoc.DocumentObjectModel.Tables;
 using Font = MigraDoc.DocumentObjectModel.Font;
+using CashFlow.Application.UseCases.Reports.Pdf.Colors;
 
 namespace CashFlow.Application.UseCases.Reports.Pdf;
 
@@ -41,7 +42,26 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
         foreach (var expense in expenses)
         {
-            CreateExpenseTable(page);
+            var table = CreateExpenseTable(page);
+
+            var row = table.AddRow();
+            row.Height = 25;
+
+            row.Cells[0].AddParagraph(expense.Title);
+            row.Cells[0].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.BLACK };
+            row.Cells[0].Shading.Color = ColorsHelper.RED_LIGHT;
+            row.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            row.Cells[0].MergeRight = 2;
+            row.Cells[0].Format.LeftIndent = 20;
+
+            row.Cells[3].AddParagraph(ResourceReportGenerationMessages.AMOUNT);
+            row.Cells[3].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 14, Color = ColorsHelper.WHITE };
+            row.Cells[3].Shading.Color = ColorsHelper.RED_DARK;
+            row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+
+            row = table.AddRow();
+            row.Height = 30;
+            row.Borders.Visible = false;
         }
 
 
@@ -94,7 +114,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
         row.Cells[1].AddParagraph("Olá, Marcelo Lima");
         row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
-        row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
+        row.Cells[1].VerticalAlignment = VerticalAlignment.Center;
     }
 
     private Table CreateExpenseTable(Section page)
