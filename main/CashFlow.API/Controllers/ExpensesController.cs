@@ -18,7 +18,6 @@ public class ExpensesController : CashFlowBaseController
         [FromServices] IRegisterExpenseUseCase useCase,
         RequestExpenseJson request)
     {
-
         var response = await useCase.Execute(request);
 
         return Created(string.Empty, response);

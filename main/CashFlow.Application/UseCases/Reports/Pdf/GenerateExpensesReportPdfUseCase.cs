@@ -15,6 +15,7 @@ using CashFlow.Domain.Extensions;
 
 
 
+
 namespace CashFlow.Application.UseCases.Reports.Pdf;
 
 
@@ -73,8 +74,22 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
             row.Cells[2].AddParagraph(expense.PaymentType.PaymentTypeToString());
             SetStyleBaseForExpenseInformation(row.Cells[2]);
 
-
             AddAmountForExpenses(row.Cells[3], expense.Amount);
+
+            if(string.IsNullOrWhiteSpace(expense.Description) == false)
+            {
+                var rowDescription = table.AddRow();
+                rowDescription.Height = HEIGHT_ROW_EXPENSE_TABLE;
+                rowDescription.Cells[0].AddParagraph(expense.Description);
+                rowDescription.Cells[0].Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 10, Color = ColorsHelper.BLACK };
+                rowDescription.Cells[0].Shading.Color = ColorsHelper.GREEN_LIGHT;
+                rowDescription.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                rowDescription.Cells[0].MergeRight = 2;
+                rowDescription.Cells[0].Format.LeftIndent = 20;
+
+                row.Cells[3].MergeDown = 1;
+
+            }
 
             AddWhiteSpace(table);
 
