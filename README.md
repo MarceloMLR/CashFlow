@@ -21,7 +21,7 @@ Para obter uma copia local funcionando, realize os seguintes passos:
 ### Requisitos
 
 * Visual Studio versão 2022+ ou Visual Studio Code
-* Windows 10+ ou Linux/MacOS com [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) instalado
+* Windows 10+ ou Linux/MacOS com [.NET SDK][dot-net-sdk] instalado
 * MySql Server
 
 ### Instalação
@@ -33,3 +33,12 @@ Para obter uma copia local funcionando, realize os seguintes passos:
 
 2. Preencha as informações no arquivo `appsettings.Development.json`.
 3. Execute a API e aproveite o seu teste :)
+
+
+
+
+
+
+<!-- Links -->
+
+[dot-net-sdk]: https://dotnet.microsoft.com/en-us/download/dotnet/8.0
