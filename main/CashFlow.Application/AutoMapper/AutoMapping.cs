@@ -17,6 +17,8 @@ namespace CashFlow.Application.AutoMapper
         {
             CreateMap<RequestExpenseJson, Expense>()
                 .ForMember(dest => dest.PaymentType, source => source.MapFrom(src => src.Type));
+
+            CreateMap<RequestRegisterUserJson, User>();
         }
 
         private void EntityToResponse()
