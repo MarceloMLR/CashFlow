@@ -15,6 +15,7 @@ public class UserController : CashFlowBaseController
         [FromBody] RequestRegisterUserJson request)
     {
         var response = await useCase.Execute(request);
-        return Ok();
+
+        return Created(string.Empty, response);
     }
 }
