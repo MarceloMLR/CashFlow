@@ -1,4 +1,5 @@
 ﻿using CashFlow.Domain.Enums;
+using CashFlow.Domain.Reports;
 
 namespace CashFlow.Domain.Extensions
 {
@@ -8,10 +9,10 @@ namespace CashFlow.Domain.Extensions
         {
             return payment switch
             {
-                PaymentType.Cash => ResourceReportPaymentTypeMessages.CASH,
-                PaymentType.CreditCard => ResourceReportPaymentTypeMessages.CREDIT_CARD,
-                PaymentType.DebitCard => ResourceReportPaymentTypeMessages.DEBIT_CARD,
-                PaymentType.EletronicTransfer => ResourceReportPaymentTypeMessages.ELETRONIC_TRANSFER,
+                PaymentType.Cash => ResourceReportGenerationMessages.CASH,
+                PaymentType.CreditCard => ResourceReportGenerationMessages.CREDIT_CARD,
+                PaymentType.DebitCard => ResourceReportGenerationMessages.DEBIT_CARD,
+                PaymentType.EletronicTransfer => ResourceReportGenerationMessages.ELETRONIC_TRANSFER,
                 _ => string.Empty
             };
         }
