@@ -135,6 +135,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Name is empty</value>
   </data>
+  <data name="PASSWORD_INVALID" xml:space="preserve">
+    <value>Your password must be at least 8 characters long, containing at least one uppercase letter, one lowercase letter, one number and one special character (e.g. !,@,?,*)</value>
+  </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>Payment Type is not valid.</value>
   </data>

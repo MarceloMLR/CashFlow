@@ -135,6 +135,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>O nome está vazio</value>
   </data>
+  <data name="PASSWORD_INVALID" xml:space="preserve">
+    <value>Sua senha deve ter no minimo 8 caracteres, contendo pelo menos uma letra maiuscula, uma letra minuscula, um numero e um caracter especial (por exemplo !,@,?,*)</value>
+  </data>
   <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
     <value>O tipo de pagamento não é valido.</value>
   </data>

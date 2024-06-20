@@ -11,11 +11,6 @@ using CashFlow.Application.UseCases.Reports.Pdf.Colors;
 using CashFlow.Domain.Extensions;
 
 
-
-
-
-
-
 namespace CashFlow.Application.UseCases.Reports.Pdf;
 
 
