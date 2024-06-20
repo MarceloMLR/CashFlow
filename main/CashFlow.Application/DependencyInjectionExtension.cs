@@ -29,6 +29,7 @@ namespace CashFlow.Application
             services.AddScoped<IGenerateExpensesReportExcelUseCase, GenerateExpensesReportExcelUseCase>();
             services.AddScoped<IGenerateExpensesReportPdfUseCase, GenerateExpensesReportPdfUseCase>();
             services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+
         }
 
         private static void AddAutoMapper(IServiceCollection services)

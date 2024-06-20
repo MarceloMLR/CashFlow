@@ -1,4 +1,5 @@
-﻿using CashFlow.Communication.Requests;
+﻿using CashFlow.Application.UseCases.Users.Register;
+using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using Microsoft.AspNetCore.Mvc;
 

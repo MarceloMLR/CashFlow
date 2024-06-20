@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
+using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Exception.ExceptionBase;
 
 namespace CashFlow.Application.UseCases.Users.Register;
@@ -9,15 +10,18 @@ namespace CashFlow.Application.UseCases.Users.Register;
 public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IMapper _mapper;
-    public RegisterUserUseCase(IMapper mapper)
+    private readonly IPasswordEncripter _passwordEncripter;
+    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter encripter)
     {
         _mapper = mapper;
+        _passwordEncripter = encripter;
     }
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
     {
         Validate(request);
 
         var user =  _mapper.Map<Domain.Entities.User>(request);
+        user.Password = _passwordEncripter.Encrypt(request.Password);
 
         return new ResponseRegisteredUserJson
         {
@@ -31,7 +35,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         if (result is null) 
         {
-            var errorMessages = result.Errors.Select(e => e.Message).ToList();
+            var errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
             
             throw new ErrorOnValidationException(errorMessages);
         }
