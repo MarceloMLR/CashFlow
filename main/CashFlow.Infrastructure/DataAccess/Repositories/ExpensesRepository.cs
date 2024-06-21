@@ -13,16 +13,16 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
         }
         public async Task Add(Expense expense)
         {
-           await _dbContext.Expenses.AddAsync(expense);
+            await _dbContext.Expenses.AddAsync(expense);
         }
 
         public async Task<List<Expense>> GetAll()
         {
-          return await _dbContext.Expenses.AsNoTracking().ToListAsync();
+            return await _dbContext.Expenses.AsNoTracking().ToListAsync();
         }
 
-     
-         async Task<Expense?> IExpensesReadOnlyRepository.GetById(long id)
+
+        async Task<Expense?> IExpensesReadOnlyRepository.GetById(long id)
         {
             return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
         }
@@ -31,7 +31,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
         {
             var result = await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
 
-            if (result is null) 
+            if (result is null)
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
 
             var endDate = new DateTime(year: date.Year, month: date.Month, day: daysInMonth, hour: 23, minute: 59, second: 59);
 
-            return await _dbContext.Expenses.AsNoTracking().Where(expense => expense.Date >= startDate && expense.Date <= endDate )
+            return await _dbContext.Expenses.AsNoTracking().Where(expense => expense.Date >= startDate && expense.Date <= endDate)
                 .OrderBy(expense => expense.Date)
                 .ThenBy(expense => expense.Title)
                 .ToListAsync();

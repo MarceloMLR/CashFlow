@@ -118,36 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AMOUNT" xml:space="preserve">
-    <value>Amount</value>
+    <value>Montant</value>
   </data>
   <data name="CASH" xml:space="preserve">
-    <value>Cash</value>
+    <value>Argent</value>
   </data>
   <data name="CREDIT_CARD" xml:space="preserve">
-    <value>Credit Card</value>
+    <value>Carte de crédit</value>
   </data>
   <data name="DATE" xml:space="preserve">
     <value>Date</value>
   </data>
   <data name="DEBIT_CARD" xml:space="preserve">
-    <value>Debit Card</value>
+    <value>Carte de débit</value>
   </data>
   <data name="DESCRIPTION" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="ELETRONIC_TRANSFER" xml:space="preserve">
-    <value>Eletronic Transfer</value>
+    <value>Transfert électronique</value>
   </data>
   <data name="EXPENSES_FOR" xml:space="preserve">
-    <value>Expenses for</value>
+    <value>Dépenses pour</value>
   </data>
   <data name="PAYMENT_TYPE" xml:space="preserve">
-    <value>Payment Type</value>
+    <value>Type de Paiement</value>
   </data>
   <data name="TITLE" xml:space="preserve">
-    <value>Title</value>
+    <value>Titre</value>
   </data>
   <data name="TOTAL_SPENT_IN" xml:space="preserve">
-    <value>Total spent in {0}</value>
+    <value>Total dépensé en {0}</value>
   </data>
 </root>

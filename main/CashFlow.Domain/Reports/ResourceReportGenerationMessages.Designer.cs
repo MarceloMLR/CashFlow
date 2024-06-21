@@ -70,7 +70,7 @@ namespace CashFlow.Domain.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cash.
+        ///   Looks up a localized string similar to Cash.
         /// </summary>
         public static string CASH {
             get {
@@ -79,7 +79,7 @@ namespace CashFlow.Domain.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Credit card.
+        ///   Looks up a localized string similar to Credit Card.
         /// </summary>
         public static string CREDIT_CARD {
             get {
@@ -97,7 +97,7 @@ namespace CashFlow.Domain.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debit card.
+        ///   Looks up a localized string similar to Debit Card.
         /// </summary>
         public static string DEBIT_CARD {
             get {
@@ -115,7 +115,7 @@ namespace CashFlow.Domain.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eletronic transfer.
+        ///   Looks up a localized string similar to Eletronic Transfer.
         /// </summary>
         public static string ELETRONIC_TRANSFER {
             get {

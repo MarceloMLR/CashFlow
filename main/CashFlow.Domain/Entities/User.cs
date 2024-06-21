@@ -1,8 +1,6 @@
 ﻿using CashFlow.Domain.Enums;
 
 namespace CashFlow.Domain.Entities;
-
-
 public class User
 {
     public long Id { get; set; }
