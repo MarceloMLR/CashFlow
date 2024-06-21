@@ -129,6 +129,9 @@
   <data name="EMAIL_INVALID" xml:space="preserve">
     <value>Email não é valido</value>
   </data>
+  <data name="EMAIL_OR_PASSWORD_INVALID" xml:space="preserve">
+    <value>Email ou senha é invalido</value>
+  </data>
   <data name="EXPENSES_CANNOT_BE_THE_FUTURE" xml:space="preserve">
     <value>Despesas não podem estar no futuro.</value>
   </data>
