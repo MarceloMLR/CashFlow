@@ -42,7 +42,9 @@ builder.Services.AddSwaggerGen( config =>
             },
             new List<string>()
         }
-    });
+    });   
+    config.EnableAnnotations();
+    
 });
 builder.Services.Configure<RouteOptions>(opt => opt.LowercaseUrls = true);
 builder.Services.AddMvc(opt => opt.Filters.Add(typeof(ExceptionFilter)));

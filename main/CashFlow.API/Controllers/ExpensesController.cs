@@ -1,4 +1,5 @@
-﻿using CashFlow.Application.UseCases.Expenses.Delete;
+﻿
+using CashFlow.Application.UseCases.Expenses.Delete;
 using CashFlow.Application.UseCases.Expenses.GetAll;
 using CashFlow.Application.UseCases.Expenses.GetById;
 using CashFlow.Application.UseCases.Expenses.Register;
@@ -7,6 +8,7 @@ using CashFlow.Communication.Requests;
 using CashFlow.Communication.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CashFlow.Api.Controllers;
 
@@ -14,7 +16,9 @@ namespace CashFlow.Api.Controllers;
 [Authorize]
 public class ExpensesController : CashFlowBaseController
 {
+
     [HttpPost]
+    [SwaggerOperation(Summary = "Registra uma nova despesa")]
     [ProducesResponseType(typeof(ResponseRegisteredExpenseJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     
@@ -30,6 +34,7 @@ public class ExpensesController : CashFlowBaseController
 
 
     [HttpGet]
+    [SwaggerOperation(Summary = "Retorna todas as despesas")]
     [ProducesResponseType(typeof(ResponseExpensesJson), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetAllExpenses([FromServices] IGetAllExpensesUseCase useCase)
@@ -46,6 +51,7 @@ public class ExpensesController : CashFlowBaseController
 
     [HttpGet]
     [Route("{id}")]
+    [SwaggerOperation(Summary = "Retorna uma despesa pelo id")]
     [ProducesResponseType(typeof(ResponseLongExpenseJson), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetExpenseById([FromServices] IGetByIdExpensesUseCase useCase, [FromRoute] long id)
@@ -58,6 +64,7 @@ public class ExpensesController : CashFlowBaseController
 
     [HttpDelete]
     [Route("{id}")]
+    [SwaggerOperation(Summary = "Deleta uma despesa")]
     [ProducesResponseType(typeof(ResponseLongExpenseJson), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
 
@@ -69,6 +76,7 @@ public class ExpensesController : CashFlowBaseController
     }
 
     [HttpPut]
+    [SwaggerOperation(Summary = "Atualiza uma despesa existente")]
     [ProducesResponseType(typeof(ResponseLongExpenseJson), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
