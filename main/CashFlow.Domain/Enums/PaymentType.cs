@@ -1,4 +1,7 @@
-﻿namespace CashFlow.Domain.Enums;
+﻿
+namespace CashFlow.Domain.Enums;
+
+
 public enum PaymentType
 {
     Cash = 0,
