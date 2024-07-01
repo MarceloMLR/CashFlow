@@ -1,6 +1,9 @@
-﻿using Microsoft.OpenApi.Any;
+﻿using CashFlow.Api.Swagger.SchemaFilter;
+using CashFlow.Communication.Enums;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 using System.Reflection;
 
 namespace CashFlow.Api.CustomSwagger
@@ -49,16 +52,22 @@ namespace CashFlow.Api.CustomSwagger
 
         private class EnumSchemaFilter : ISchemaFilter
         {
+            private readonly IEnumerable<IEnumSchemaFilter> _enumSchemaFilters;
+
+            public EnumSchemaFilter()
+            {
+                // Carregar todos os filtros de enum
+                _enumSchemaFilters = new List<IEnumSchemaFilter>
+                {
+                    new PaymentTypeSchemaFilter()
+                    // Adicione outros filtros de enum aqui
+                };
+            }
             public void Apply(OpenApiSchema schema, SchemaFilterContext context)
             {
-                if (context.Type.IsEnum)
+                foreach (var filter in _enumSchemaFilters)
                 {
-                    schema.Enum = Enum.GetValues(context.Type)
-                        .Cast<object>()
-                        .Select(value => new OpenApiString($"{Convert.ToInt32(value)} = {Enum.GetName(context.Type, value)}"))
-                        .ToList<IOpenApiAny>();
-                    schema.Type = "string";
-                    schema.Format = null;
+                    filter.Execute(schema, context);
                 }
             }
         }
