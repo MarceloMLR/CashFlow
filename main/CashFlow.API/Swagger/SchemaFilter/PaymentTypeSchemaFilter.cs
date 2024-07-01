@@ -13,10 +13,10 @@ namespace CashFlow.Api.Swagger.SchemaFilter
             {
                 var enumDescriptions = new List<string>
                 {
-                    "<span style='color:red; font-weight:bold;'>0</span> = Dinheiro",
-                    "<span style='color:red'>1</span> = Cartão de Credito",
-                    "<span style='color:red'>2</span> = Cartão de Debito",
-                    "<span style='color:red'>3</span> = Transfêrencia Eletronica"
+                    "<strong>0</strong> = Dinheiro",
+                    "<strong>1</strong> = Cartão de Credito",
+                    "<strong>2</strong> = Cartão de Debito",
+                    "<strong>3</strong> = Transfêrencia Eletronica"
                 };
 
                 schema.Description = $"Valores disponíveis:<br><br>{string.Join("<br>", enumDescriptions)}";
