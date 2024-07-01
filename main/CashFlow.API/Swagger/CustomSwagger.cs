@@ -44,8 +44,6 @@ namespace CashFlow.Api.CustomSwagger
                 });
                 config.EnableAnnotations();
                 
-
-                // Adicionar mapeamento automático de enums
                 config.SchemaFilter<EnumSchemaFilter>();
             });
         }
@@ -56,11 +54,10 @@ namespace CashFlow.Api.CustomSwagger
 
             public EnumSchemaFilter()
             {
-                // Carregar todos os filtros de enum
+               
                 _enumSchemaFilters = new List<IEnumSchemaFilter>
                 {
                     new PaymentTypeSchemaFilter()
-                    // Adicione outros filtros de enum aqui
                 };
             }
             public void Apply(OpenApiSchema schema, SchemaFilterContext context)

@@ -20,7 +20,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
     private readonly IAccessTokenGenerator _tokenGenerator;
     private readonly IUnitOfWork _unitOfWork;
-    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter encripter, IUserReadOnlyRepository userReadOnlyRepository, IAccessTokenGenerator acessTokenGenerator, IUnitOfWork unitOfWork, IUserWriteOnlyRepository userWriteOnlyRepository)
+    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter encripter, IUserReadOnlyRepository userReadOnlyRepository, IAccessTokenGenerator acessTokenGenerator, IUserWriteOnlyRepository userWriteOnlyRepository, IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _passwordEncripter = encripter;
