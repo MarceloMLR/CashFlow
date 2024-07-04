@@ -7,11 +7,11 @@ using Xunit;
 
 namespace WebApi.Tests.User.Register
 {
-    public class RegisterUserTest : IClassFixture<WebApplicationFactory<Program>>
+    public class RegisterUserTest : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _httpClient;
         private const string METHOD = "cashflow/user";
-        public RegisterUserTest(WebApplicationFactory<Program> webApplicationFactory)
+        public RegisterUserTest(CustomWebApplicationFactory webApplicationFactory)
         {
             _httpClient = webApplicationFactory.CreateClient();
            
