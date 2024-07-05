@@ -6,29 +6,31 @@ using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace CashFlow.Infrastructure.Services.LoggedUser
+namespace CashFlow.Infrastructure.Services.LoggedUser;
+internal class LoggedUser : ILoggedUser
 {
-    public class LoggedUser : ILoggedUser
+    private readonly CashFlowDbContext _dbContext;
+    private readonly ITokenProvider _tokenProvider;
+
+    public LoggedUser(CashFlowDbContext dbContext, ITokenProvider tokenProvider)
     {
-        private readonly CashFlowDbContext _dbcontext;
-        private readonly ITokenProvider _tokenProvider;
+        _dbContext = dbContext;
+        _tokenProvider = tokenProvider;
+    }
 
-        public LoggedUser(CashFlowDbContext dbContext, ITokenProvider tokenProvider)
-        {
-            _dbcontext = dbContext;
-            _tokenProvider = tokenProvider;
-        }
-        public async Task<User> Get()
-        {
-            string token = _tokenProvider.TokenOnRequest();
+    public async Task<User> Get()
+    {
+        string token = _tokenProvider.TokenOnRequest();
 
-            var tokenHandler = new JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
 
-            var jwtSecurityTOken = tokenHandler.ReadJwtToken(token);
+        var jwtSecurityToken = tokenHandler.ReadJwtToken(token);
 
-            var identifier = jwtSecurityTOken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value;
+        var identifier = jwtSecurityToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value;
 
-            return await _dbcontext.User.AsNoTracking().FirstAsync(user => user.Guid == Guid.Parse(identifier));
-        }
+        return await _dbContext
+            .User
+            .AsNoTracking()
+            .FirstAsync(user => user.Guid == Guid.Parse(identifier));
     }
 }

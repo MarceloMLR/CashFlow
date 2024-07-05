@@ -19,13 +19,13 @@ namespace CashFlow.Infrastructure.Security.Tokens
         }
         public string Generate(User user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
 
-            var claims = new List<Claim>();
+
+            var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Name);
-                new Claim(ClaimTypes.Sid, user.Guid.ToString());
-            }
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Sid, user.Guid.ToString()),
+            };
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -33,6 +33,8 @@ namespace CashFlow.Infrastructure.Security.Tokens
                SigningCredentials = new SigningCredentials(SecurityKey(), SecurityAlgorithms.HmacSha256Signature),
                Subject = new ClaimsIdentity(claims)
             };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
 
             var securityToken = tokenHandler.CreateToken(tokenDescriptor);
 

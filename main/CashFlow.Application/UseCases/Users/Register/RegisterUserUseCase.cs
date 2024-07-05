@@ -5,6 +5,7 @@ using CashFlow.Domain.Repositories;
 using CashFlow.Domain.Repositories.User;
 using CashFlow.Domain.Security.Cryptography;
 using CashFlow.Domain.Security.Tokens;
+using CashFlow.Domain.Services.LoggedUser;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionBase;
 using FluentValidation.Results;
@@ -20,20 +21,29 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
     private readonly IAccessTokenGenerator _tokenGenerator;
     private readonly IUnitOfWork _unitOfWork;
-    public RegisterUserUseCase(IMapper mapper, IPasswordEncripter encripter, IUserReadOnlyRepository userReadOnlyRepository, IAccessTokenGenerator acessTokenGenerator, IUserWriteOnlyRepository userWriteOnlyRepository, IUnitOfWork unitOfWork)
+
+    public RegisterUserUseCase(
+        IMapper mapper,
+        IPasswordEncripter encripter,
+        IUserReadOnlyRepository userReadOnlyRepository,
+        IAccessTokenGenerator accessTokenGenerator,
+        IUserWriteOnlyRepository userWriteOnlyRepository,
+        IUnitOfWork unitOfWork)
     {
         _mapper = mapper;
         _passwordEncripter = encripter;
         _userReadOnlyRepository = userReadOnlyRepository;
         _userWriteOnlyRepository = userWriteOnlyRepository;
         _unitOfWork = unitOfWork;
-        _tokenGenerator = acessTokenGenerator;
+        _tokenGenerator = accessTokenGenerator;
     }
+       
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
     {
         await Validate(request);
 
         var user =  _mapper.Map<Domain.Entities.User>(request);
+        
         user.Password = _passwordEncripter.Encrypt(request.Password);
         user.Guid = Guid.NewGuid();
         user.Created = DateTime.Now;
