@@ -11,8 +11,8 @@ namespace WebApi.Tests;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private CashFlow.Domain.Entities.User _user;
-    private  string _password;
+    private CashFlow.Domain.Entities.User? _user;
+    private  string? _password;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Test").
