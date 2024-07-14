@@ -22,23 +22,18 @@ namespace CashFlow.Infrastructure.DataAccess.Repositories
         }
 
 
-        async Task<Expense?> IExpensesReadOnlyRepository.GetById(long id)
+        async Task<Expense?> IExpensesReadOnlyRepository.GetById(User user, long id)
         {
-            return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id);
+            return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id == id && expense.UserId == user.Id);
         }
 
-        public async Task<bool> Delete(long id)
+        public async Task Delete(long id)
         {
-            var result = await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id == id);
+            var result = await _dbContext.Expenses.FindAsync(id);
+  
 
-            if (result is null)
-            {
-                return false;
-            }
+            _dbContext.Expenses.Remove(result!);
 
-            _dbContext.Expenses.Remove(result);
-
-            return true;
         }
 
         public void Update(Expense expense)
