@@ -1,16 +1,15 @@
 using CashFlow.Api.CustomSwagger;
 using CashFlow.Api.Filters;
 using CashFlow.Api.Middlewares;
+using CashFlow.Api.Token;
 using CashFlow.Application;
+using CashFlow.Domain.Security.Tokens;
 using CashFlow.Infrastructure;
+using CashFlow.Infrastructure.Extensions;
 using CashFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using CashFlow.Infrastructure.Extensions;
 using System.Text;
-using CashFlow.Domain.Services.LoggedUser;
-using CashFlow.Api.Token;
-using CashFlow.Domain.Security.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<CultureMiddleware>();
+
 
 app.UseHttpsRedirection();
 

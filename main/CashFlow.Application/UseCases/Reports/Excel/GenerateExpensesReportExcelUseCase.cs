@@ -1,6 +1,7 @@
 ﻿using CashFlow.Domain.Extensions;
 using CashFlow.Domain.Reports;
 using CashFlow.Domain.Repositories.Expenses;
+using CashFlow.Domain.Services.LoggedUser;
 using ClosedXML.Excel;
 
 namespace CashFlow.Application.UseCases.Reports.Excel
@@ -9,13 +10,17 @@ namespace CashFlow.Application.UseCases.Reports.Excel
     {
         private const string CURRENCY_SYMBOL = "R$";
         private readonly IExpensesReadOnlyRepository _repository;
-        public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository)
+        private readonly ILoggedUser _loggedUser;
+        public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository, ILoggedUser loggedUser)
         {
             _repository = repository;
+            _loggedUser = loggedUser;
         }
         public async Task<byte[]> Execute(DateTime month)
         {
-            var expenses = await _repository.FilterByMonth(month);
+            var loggedUser = await _loggedUser.Get();
+
+            var expenses = await _repository.FilterByMonth(loggedUser, month);
 
             if (expenses.Count == 0)
             {
@@ -24,7 +29,7 @@ namespace CashFlow.Application.UseCases.Reports.Excel
 
             using var workbook = new XLWorkbook();
 
-            workbook.Author = "Marcelo Lima";
+            workbook.Author = loggedUser.Name;
             workbook.Style.Font.FontSize = 12;
             workbook.Style.Font.FontName = "Times New Roman";
 
@@ -41,7 +46,7 @@ namespace CashFlow.Application.UseCases.Reports.Excel
                 worksheet.Cell($"B{raw}").Value = expense.Date;
                 worksheet.Cell($"C{raw}").Value = expense.PaymentType.PaymentTypeToString();
                 worksheet.Cell($"D{raw}").Value = expense.Amount;
-                worksheet.Cell($"D{raw}").Style.NumberFormat.Format = $"- {CURRENCY_SYMBOL} #";
+                worksheet.Cell($"D{raw}").Style.NumberFormat.Format = $"- {CURRENCY_SYMBOL} #,##0.00";
                 worksheet.Cell($"E{raw}").Value = expense.Description;
 
                 raw++;

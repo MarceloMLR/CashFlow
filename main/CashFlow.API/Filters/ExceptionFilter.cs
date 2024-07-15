@@ -38,4 +38,6 @@ public class ExceptionFilter : IExceptionFilter
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(errorMessage);
     }
+
+
 }
