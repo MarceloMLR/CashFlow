@@ -1,7 +1,6 @@
 ﻿using CashFlow.Application.UseCases.Reports.Excel;
 using CashFlow.Application.UseCases.Reports.Pdf;
 using CashFlow.Domain.Enums;
-using CashFlow.Exception.ExceptionBase;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
