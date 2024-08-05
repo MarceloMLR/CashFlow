@@ -7,23 +7,22 @@ using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using WebApi.Test;
 using WebApi.Tests.InlineData;
 using Xunit;
 
 namespace WebApi.Tests.Login.DoLogin
 {
-    public class DoLoginTest : IClassFixture<CustomWebApplicationFactory>
+    public class DoLoginTest : CashFlowClassFixture
     {
         private const string METHOD = "cashflow/login";
 
-        private readonly HttpClient _httpClient;
         private readonly string _email;
         private readonly string _name;
         private readonly string _password;
 
-        public DoLoginTest(CustomWebApplicationFactory webApplicationFactory)
+        public DoLoginTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory) 
         {
-            _httpClient = webApplicationFactory.CreateClient();
             _email = webApplicationFactory.GetEmail();
             _name = webApplicationFactory.GetName();
             _password = webApplicationFactory.GetPassword();
@@ -38,7 +37,7 @@ namespace WebApi.Tests.Login.DoLogin
                 Password = _password
             };
 
-            var response = await _httpClient.PostAsJsonAsync(METHOD, request);
+            var response = await DoPost(METHOD, request);
 
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             
@@ -56,9 +55,8 @@ namespace WebApi.Tests.Login.DoLogin
         public async Task Error_Login_Invalid(string culture)
         {
             var request = RequestLoginJsonBuilder.Build();
-
-            _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(culture));    
-            var response = await _httpClient.PostAsJsonAsync(METHOD, request);
+    
+            var response = await DoPost(METHOD, request);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 

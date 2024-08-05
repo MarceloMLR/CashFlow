@@ -1,5 +1,4 @@
 ﻿using CashFlow.Application.UseCases.Expenses.Register;
-using CashFlow.Domain.Repositories.Expenses;
 using CashFlow.Exception;
 using CashFlow.Exception.ExceptionBase;
 using CommonTestsUtilities.cs.AutoMapper;
