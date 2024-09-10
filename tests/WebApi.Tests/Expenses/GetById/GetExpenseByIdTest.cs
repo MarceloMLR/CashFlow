@@ -1,7 +1,6 @@
 ﻿using CashFlow.Communication.Enums;
 using CashFlow.Exception;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.Globalization;
 using System.Net;
 using System.Text.Json;
@@ -20,8 +19,8 @@ public class GetExpenseByIdTest : CashFlowClassFixture
     private readonly long _expenseId;
     public GetExpenseByIdTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _token = webApplicationFactory.GetToken();
-        _expenseId = webApplicationFactory.GetExpenseId();
+        _token = webApplicationFactory.User_Team_Member.GetToken();
+        _expenseId = webApplicationFactory.Expense.GetExpenseId();
     }
 
     [Fact]
@@ -29,7 +28,7 @@ public class GetExpenseByIdTest : CashFlowClassFixture
     {
         var result = await DoGet(requestUri: $"{METHOD}/{_expenseId}", token: _token);
 
-        result.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+        result.StatusCode.Should().Be(HttpStatusCode.OK);
 
         var body = await result.Content.ReadAsStreamAsync();
 

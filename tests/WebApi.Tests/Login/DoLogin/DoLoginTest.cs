@@ -23,9 +23,9 @@ namespace WebApi.Tests.Login.DoLogin
 
         public DoLoginTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory) 
         {
-            _email = webApplicationFactory.GetEmail();
-            _name = webApplicationFactory.GetName();
-            _password = webApplicationFactory.GetPassword();
+            _email = webApplicationFactory.User_Team_Member.GetEmail();
+            _name = webApplicationFactory.User_Team_Member.GetName();
+            _password = webApplicationFactory.User_Team_Member.GetPassword();
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace WebApi.Tests.Login.DoLogin
         {
             var request = RequestLoginJsonBuilder.Build();
     
-            var response = await DoPost(METHOD, request);
+            var response = await DoPost(requestUri: METHOD, request: request, culture: culture);
 
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 

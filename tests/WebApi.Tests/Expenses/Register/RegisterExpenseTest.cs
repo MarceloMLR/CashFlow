@@ -15,11 +15,11 @@ public class RegisterExpenseTest : CashFlowClassFixture
 {
     
     private const string METHOD = "cashflow/expenses";
-
+    private readonly string _token;
 
     public RegisterExpenseTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-
+        _token = webApplicationFactory.User_Team_Member.GetToken();
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class RegisterExpenseTest : CashFlowClassFixture
     {
         var request = RequestRegisterExpenseJsonBuilder.Build();
 
-        var result = await DoPost(METHOD, request);
+        var result = await DoPost(METHOD, request, token: _token);
 
         result.StatusCode.Should().Be(HttpStatusCode.Created);
 
@@ -45,7 +45,7 @@ public class RegisterExpenseTest : CashFlowClassFixture
         var request = RequestRegisterExpenseJsonBuilder.Build();
         request.Title = string.Empty;
 
-        var result = await DoPost(requestUri: METHOD, request: request, culture: cultureInfo);
+        var result = await DoPost(requestUri: METHOD, request: request, culture: cultureInfo, token: _token);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
 
