@@ -30,7 +30,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
         GlobalFontSettings.FontResolver = new ExpensesReportFontResolver();
     }
-    public async Task<byte[]> Execute(DateTime month)
+    public async Task<byte[]> Execute(DateOnly month)
     {
         var loggedUser = await _loggedUser.Get();
 
@@ -102,7 +102,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return RenderDocument(document);
     }
 
-    private Document CreateDocument(string name, DateTime month)
+    private Document CreateDocument(string name, DateOnly month)
     {
         var document = new Document();
 
@@ -164,7 +164,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return table;
     }
 
-    private void CreateTotalSpentSection(Section page, DateTime month, decimal totalExpenses)
+    private void CreateTotalSpentSection(Section page, DateOnly month, decimal totalExpenses)
     {
         var paragraph = page.AddParagraph();
         paragraph.Format.SpaceBefore = "40";

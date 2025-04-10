@@ -16,7 +16,7 @@ namespace CashFlow.Application.UseCases.Reports.Excel
             _repository = repository;
             _loggedUser = loggedUser;
         }
-        public async Task<byte[]> Execute(DateTime month)
+        public async Task<byte[]> Execute(DateOnly month)
         {
             var loggedUser = await _loggedUser.Get();
 
