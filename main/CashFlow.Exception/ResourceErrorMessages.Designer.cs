@@ -63,9 +63,9 @@ namespace CashFlow.Exception {
         /// <summary>
         ///   Looks up a localized string similar to The Amount must be greater than zero.
         /// </summary>
-        public static string AMOUNT_MUST_BE_GREATER_THAN_ZEO {
+        public static string AMOUNT_MUST_BE_GREATER_THAN_ZERO {
             get {
-                return ResourceManager.GetString("AMOUNT_MUST_BE_GREATER_THAN_ZEO", resourceCulture);
+                return ResourceManager.GetString("AMOUNT_MUST_BE_GREATER_THAN_ZERO", resourceCulture);
             }
         }
         

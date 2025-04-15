@@ -77,7 +77,7 @@ public class ExpensesController : CashFlowBaseController
 
     [HttpPut]
     [SwaggerOperation(Summary = "Atualiza uma despesa existente")]
-    [ProducesResponseType(typeof(ResponseLongExpenseJson), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     [Route("{id}")]
